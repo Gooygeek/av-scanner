@@ -1,0 +1,27 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+      - master
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: "checkout"
+        uses: actions/checkout@v3
+      - name: "install :: nodejs setup"
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: "install :: release dependencies"
+        run: |
+          npm install @semantic-release/commit-analyzer
+          npm install @semantic-release/release-notes-generator
+          npm install @semantic-release/github
+          npm install @semantic-release/exec
+      - name: "release :: tag repo"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
