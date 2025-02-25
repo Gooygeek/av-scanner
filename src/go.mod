@@ -1,4 +1,4 @@
-module av-scanner
+module github.com/Gooygeek/av-scanner
 
 go 1.23.4
 
