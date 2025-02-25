@@ -1,5 +1,7 @@
 name: Build and Generate Documentation
 on: [pull_request]
+permissions:
+  contents: write
 jobs:
   build-and-docs:
     name: Build and Generate Documentation
