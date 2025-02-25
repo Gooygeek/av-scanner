@@ -18,6 +18,17 @@ jobs:
         with:
           go-version: 1.23
 
+      - name: "update :: dependencies"
+        working-directory: ./src
+        run: go mod tidy
+
+      - name: "commit :: dependencies"
+        run: |
+          git add ./src/*
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "chore: tidy dependencies"
+          fi
+
       - name: "install :: dependencies"
         working-directory: ./src
         run: go mod download
