@@ -1,0 +1,53 @@
+name: Build and Generate Documentation
+on: [pull_request]
+jobs:
+  build-and-docs:
+    name: Build and Generate Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: "checkout"
+        uses: actions/checkout@v3
+
+      - name: "configure :: git"
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: "install :: go"
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.23
+
+      - name: "install :: dependencies"
+        working-directory: ./src
+        run: go mod download
+
+      - name: "lint :: go code"
+        working-directory: ./src
+        run: go fmt
+
+      - name: "commit :: format"
+        run: |
+          git add ./src/*
+          git commit -m "chore: format code"
+
+      - name: "test :: go project"
+        run: go test ./...
+
+      - name: "build :: go project"
+        working-directory: ./src
+        run: go build -o ../bin/av-scanner
+
+      - name: "commit :: binary"
+        run: |
+          git add ./bin/av-scanner
+          git commit -m "chore: update binary"
+
+      - name: "generate :: documentation"
+        run: ./bin/av-scanner docs --format md
+
+      - name: "commit :: documentation"
+        run: |
+          git add docs-*
+          git commit -m "chore: update documentation"
+          git push
