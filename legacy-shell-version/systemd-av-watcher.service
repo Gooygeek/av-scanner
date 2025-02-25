@@ -1,0 +1,11 @@
+[Unit]
+Description=AV Watcher Daemon
+Before=docker.service
+
+[Service]
+ExecStart=av-watcher.sh --watch "/path/to/scanned/folder"
+Restart=always
+Type=exec
+
+[Install]
+WantedBy=multi-user.target
