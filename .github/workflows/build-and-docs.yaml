@@ -29,7 +29,9 @@ jobs:
       - name: "commit :: format"
         run: |
           git add ./src/*
-          git commit -m "chore: format code"
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "chore: format code"
+          fi
 
       - name: "test :: go project"
         run: go test ./...
@@ -41,7 +43,9 @@ jobs:
       - name: "commit :: binary"
         run: |
           git add ./bin/av-scanner
-          git commit -m "chore: update binary"
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "chore: update binary"
+          fi
 
       - name: "generate :: documentation"
         run: ./bin/av-scanner docs --format md
@@ -49,5 +53,7 @@ jobs:
       - name: "commit :: documentation"
         run: |
           git add docs-*
-          git commit -m "chore: update documentation"
-          git push
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "chore: update documentation"
+            git push
+          fi
