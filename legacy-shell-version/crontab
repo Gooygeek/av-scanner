@@ -1,0 +1,2 @@
+# Run the av-watcher.sh script every 30 minutes
+0,30 * * * * av-watcher.sh --sweep "/path/to/scanned/folder" 2>&1 | tee -a /path/to/logs/av-watcher.log
