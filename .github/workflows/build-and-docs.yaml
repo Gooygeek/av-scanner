@@ -45,6 +45,7 @@ jobs:
           fi
 
       - name: "test :: go project"
+        working-directory: ./src
         run: go test ./...
 
       - name: "build :: go project"
