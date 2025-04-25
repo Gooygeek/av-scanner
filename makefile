@@ -35,3 +35,7 @@ sweep:
 .PHONY: watch
 watch:
 	./bin/av-scanner watch --mode watch --notify-endpoint http://ntfy.sh --notify-topic 1234-av-scanner-testing
+
+.PHONY: compile-alpine
+compile-alpine:
+	docker run --rm -v $$(pwd):/app -w /app golang:alpine sh -c 'apk add --no-cache gcc g++ musl-dev && cd src && go build -o ../bin/av-scanner_alpine'
