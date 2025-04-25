@@ -10,6 +10,13 @@ These scans can be either once-off, periodically via cron, or watch for new file
 
 It saves the scan results in a database to prevent rescanning and sends notificaitons of the scan results.
 
+## Prerequisites
+
+* Install `file`
+* Install `clamav`
+* Configure clamd `StreamMaxLength` to be at least as large as the largest file you will try and scan.
+  * This tool will pass files up to ~500 MB through clamav, so a value of `600` is recommened.
+
 ## How To Use
 
 The most basic usage is to trigger from the commandline:
