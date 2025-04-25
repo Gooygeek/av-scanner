@@ -7,14 +7,14 @@ import (
 	"github.com/dutchcoders/go-clamd"
 )
 
-func scanFileWithClamAV(filePath string) (string, string, error) {
+func scanFileWithClamAV(filePath string, clamAddress string) (string, string, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return "", "", err
 	}
 	defer file.Close()
 
-	clamd := clamd.NewClamd("tcp://127.0.0.1:3310")
+	clamd := clamd.NewClamd(clamAddress)
 	response, err := clamd.ScanStream(file, make(chan bool))
 	if err != nil {
 		return "", "", err

@@ -315,7 +315,7 @@ func processFile(filePath string, db *sql.DB) {
 		logger.Info("File too large to scan: " + filePath)
 	} else {
 		logger.Info("Scanning: " + filePath)
-		scanResult, scanLog, err = scanFileWithClamAV(filePath)
+		scanResult, scanLog, err = scanFileWithClamAV(filePath, viper.GetString("clamav"))
 		if err != nil {
 			logger.Error("Error scanning file with ClamAV: " + err.Error())
 			return
